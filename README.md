@@ -1,19 +1,19 @@
-# Apple Calendar Skill
+# macOS Calendar Skill
 
-This repo stores a skill for Apple Calendar.app integration on macOS via AppleScript.
+This repo stores a skill for macOS Calendar.app integration via AppleScript.
 
 ## Installation
 
 Install with `skills.sh`:
 
 ```bash
-skills.sh add vinitu/apple-calendar-skill
+skills.sh add vinitu/macos-calendar-skill
 ```
 
 If you use the npm installer instead:
 
 ```bash
-npx skills add vinitu/apple-calendar-skill
+npx skills add vinitu/macos-calendar-skill
 ```
 
 ## Scope

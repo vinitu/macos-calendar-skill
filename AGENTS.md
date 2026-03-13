@@ -1,6 +1,6 @@
 # Repo Guide
 
-This repo stores a skill for Apple Calendar.app integration on macOS.
+This repo stores a skill for macOS Calendar.app integration.
 
 ## Goal
 

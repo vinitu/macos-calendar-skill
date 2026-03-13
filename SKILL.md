@@ -1,9 +1,9 @@
 ---
-name: apple-calendar
+name: macos-calendar
 description: Create, read, update, and delete events in Apple Calendar.app on macOS. Use for scheduling, checking availability, managing recurring events, and setting reminders. Triggers on queries about calendar, events, meetings, scheduling, or appointments.
 ---
 
-# Apple Calendar Integration
+# macOS Calendar Integration
 
 Manage events in Calendar.app using AppleScript (`osascript`) on macOS.
 
