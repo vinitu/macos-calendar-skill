@@ -1,0 +1,19 @@
+name: CI · Main
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint & Test
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make compile
+      - run: make test

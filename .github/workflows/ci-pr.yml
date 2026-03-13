@@ -1,0 +1,70 @@
+name: CI · PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-pr-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint & Test
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate repository structure
+        run: |
+          set -euo pipefail
+          required=(
+            AGENTS.md
+            LICENSE
+            README.md
+            SKILL.md
+            Makefile
+            scripts/calendar/list.applescript
+            scripts/event/list.applescript
+            tests/dictionary_contract.sh
+            tests/smoke_calendar.sh
+          )
+          for path in "${required[@]}"; do
+            [ -f "$path" ] || { echo "::error file=$path::Missing required file"; exit 1; }
+          done
+
+      - name: Check AppleScript syntax
+        run: make compile
+
+      - name: Check shell scripts
+        run: |
+          set -euo pipefail
+          if command -v shellcheck >/dev/null 2>&1; then
+            shellcheck tests/*.sh
+          else
+            echo "shellcheck not available, skipping"
+          fi
+
+      - name: Validate SKILL.md frontmatter
+        run: |
+          set -euo pipefail
+          head -1 SKILL.md | grep -q '^---' || { echo "::error::SKILL.md must start with ---"; exit 1; }
+          grep -q '^name:' SKILL.md || { echo "::error::SKILL.md must contain name:"; exit 1; }
+          grep -q '^description:' SKILL.md || { echo "::error::SKILL.md must contain description:"; exit 1; }
+
+      - name: Run dictionary contract
+        run: bash tests/dictionary_contract.sh
+
+      - name: Run smoke test
+        run: make test
