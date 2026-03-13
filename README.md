@@ -4,16 +4,14 @@ This repo stores a skill for macOS Calendar.app integration via AppleScript.
 
 ## Installation
 
-Install with `skills.sh`:
+```bash
+npx skills add vinitu/macos-calendar-skill
+```
+
+Or with [skills.sh](https://skills.sh):
 
 ```bash
 skills.sh add vinitu/macos-calendar-skill
-```
-
-If you use the npm installer instead:
-
-```bash
-npx skills add vinitu/macos-calendar-skill
 ```
 
 ## Scope
@@ -32,46 +30,20 @@ npx skills add vinitu/macos-calendar-skill
 
 ## How To Use
 
+From the skill directory (or path where scripts are installed):
+
 ```bash
-# List all calendars
-osascript -e 'tell application "Calendar" to return name of every calendar'
-
-# Create an event
-osascript -e '
-tell application "Calendar"
-  tell calendar "Home"
-    make new event with properties {summary:"Dentist", start date:date "2026-03-15 10:00:00", end date:date "2026-03-15 11:00:00"}
-  end tell
-end tell'
-
-# Get today's events
-osascript -e '
-set todayStart to current date
-set hours of todayStart to 0
-set minutes of todayStart to 0
-set seconds of todayStart to 0
-set todayEnd to todayStart + 1 * days
-tell application "Calendar"
-  set output to ""
-  repeat with c in calendars
-    set evts to (every event of c whose start date ≥ todayStart and start date < todayEnd)
-    repeat with e in evts
-      set output to output & (start date of e) & " | " & summary of e & linefeed
-    end repeat
-  end repeat
-  return output
-end tell'
-
-# Delete an event
-osascript -e '
-tell application "Calendar"
-  tell calendar "Home"
-    delete (every event whose summary is "Dentist")
-  end tell
-end tell'
+# List all calendars with account name
+osascript scripts/calendar/list.applescript
+# Create event in calendar "Home" (summary, start, end)
+osascript scripts/event/create.applescript "Home" "Dentist" "2026-03-15 10:00:00" "2026-03-15 11:00:00"
+# List events in date range (start, end)
+osascript scripts/event/list-range.applescript "2026-03-15 00:00:00" "2026-03-16 00:00:00"
+# Delete events with given summary in calendar
+osascript scripts/event/delete.applescript "Home" "Dentist"
 ```
 
-For the full command set and examples, see `SKILL.md`.
+For the full command set and examples, see `SKILL.md` and scripts under `scripts/`.
 
 ## Troubleshooting
 
