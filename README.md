@@ -1,6 +1,9 @@
 # macOS Calendar Skill
 
-This repo stores a skill for macOS Calendar.app integration via AppleScript.
+This repo stores an AI agent skill for Apple Calendar.app on macOS.
+
+The public interface is `scripts/commands`.
+`scripts/applescripts` stores internal AppleScript backends and dictionary-aligned coverage.
 
 ## Installation
 
@@ -14,42 +17,42 @@ Or with [skills.sh](https://skills.sh):
 skills.sh add vinitu/macos-calendar-skill
 ```
 
-## Scope
-
-- List all calendars and their accounts.
-- Create, read, update, and delete events.
-- Search events by title and date range.
-- Create recurring events (daily, weekly, monthly).
-- Set display alerts/reminders on events.
-
 ## Prerequisites
 
-- macOS with Calendar.app configured
-- At least one calendar account (iCloud, Google, Exchange, etc.)
-- Automation permission granted to terminal (System Settings → Privacy & Security → Automation)
+- macOS with Calendar.app
+- Automation permission granted to your terminal app
 
-## How To Use
+## Public Interface
 
-From the skill directory (or path where scripts are installed):
+Run skill actions with:
 
 ```bash
-# List all calendars with account name
-osascript scripts/calendar/list.applescript
-# Create event in calendar "Home" (summary, start, end)
-osascript scripts/event/create.applescript "Home" "Dentist" "2026-03-15 10:00:00" "2026-03-15 11:00:00"
-# List events in date range (start, end)
-osascript scripts/event/list-range.applescript "2026-03-15 00:00:00" "2026-03-16 00:00:00"
-# Delete events with given summary in calendar
-osascript scripts/event/delete.applescript "Home" "Dentist"
+scripts/commands/<entity>/<action>.sh [args...]
 ```
 
-For the full command set and examples, see `SKILL.md` and scripts under `scripts/`.
+## Backend Map
 
-## Troubleshooting
+- `scripts/commands/event/*` → AppleScript in `scripts/applescripts/event/*`
 
-| Issue | Solution |
-|-------|----------|
-| "not authorized" error | Grant Automation permission to terminal in System Settings |
-| Calendar not found | List calendars first to get exact names |
-| Date parse error | Check system locale; try `"March 15, 2026 10:00:00 AM"` format |
-| Event not syncing | Open Calendar.app and verify the account is online |
+## Command Surface
+
+Event:
+
+- `scripts/commands/event/alert.sh`
+- `scripts/commands/event/create.sh`
+- `scripts/commands/event/delete.sh`
+- `scripts/commands/event/get.sh`
+- `scripts/commands/event/list-range.sh`
+- `scripts/commands/event/list.sh`
+- `scripts/commands/event/recurring.sh`
+- `scripts/commands/event/search-range.sh`
+- `scripts/commands/event/search.sh`
+- `scripts/commands/event/show.sh`
+- `scripts/commands/event/update.sh`
+
+## Validation
+
+```bash
+make compile
+make test
+```
