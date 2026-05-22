@@ -21,9 +21,21 @@ Do not call `scripts/applescripts` directly.
 
 Run commands from `scripts/commands`:
 
+- `scripts/commands/calendar/*`
 - `scripts/commands/event/*`
 
 ## Commands
+
+### Calendar
+
+```bash
+scripts/commands/calendar/get.sh "Calendar Name"
+scripts/commands/calendar/list.sh
+scripts/commands/calendar/reload.sh "Calendar Name"
+scripts/commands/calendar/subscribe.sh "https://example.com/calendar.ics"
+scripts/commands/calendar/switch-view.sh "day"
+scripts/commands/calendar/view-at.sh "2024-01-01"
+```
 
 ### Event
 
@@ -40,6 +52,26 @@ scripts/commands/event/search.sh
 scripts/commands/event/show.sh
 scripts/commands/event/update.sh
 ```
+
+## JSON Contract
+
+Calendar object:
+
+- `name` (string)
+- `account` (string)
+
+Event object:
+
+- `summary` (string)
+- `start_date` (string, ISO 8601)
+- `end_date` (string, ISO 8601)
+- `location` (string or null)
+- `description` (string or null)
+- `allday` (boolean)
+
+Scalar envelopes:
+
+- `success/failure`: `{"success": true/false, "error": "..."}`
 
 ## Safety Boundaries
 

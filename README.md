@@ -32,9 +32,19 @@ scripts/commands/<entity>/<action>.sh [args...]
 
 ## Backend Map
 
+- `scripts/commands/calendar/*` → AppleScript in `scripts/applescripts/calendar/*`
 - `scripts/commands/event/*` → AppleScript in `scripts/applescripts/event/*`
 
 ## Command Surface
+
+Calendar:
+
+- `scripts/commands/calendar/get.sh`
+- `scripts/commands/calendar/list.sh`
+- `scripts/commands/calendar/reload.sh`
+- `scripts/commands/calendar/subscribe.sh`
+- `scripts/commands/calendar/switch-view.sh`
+- `scripts/commands/calendar/view-at.sh`
 
 Event:
 
